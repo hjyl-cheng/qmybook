@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<table id="table" border="1" width="400" align="center">
+		<tr>
+			<th>ID</th>
+			<th>书名</th>
+			<th>价格</th>
+			<th>描述</th>
+			<th>出版编号</th>
+		</tr>
+	</table>
+	<script src="node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="node_modules/arttemplate/template-web.js"></script>
+	<!-- 1.先声明模板 -->
+	<script id="tr" type="text/html">
+        {{each data value}}
+            <tr>
+				<td>{{value.id}}</td>
+				<td>{{value.bookName}}</td>
+				<td>{{value.bookPrice}}</td>
+				<td>{{value.bookDescript}}</td>
+				<td>{{value.bookCode}}</td>
+			</tr>
+        {{/each}}
+	</script>
+	<script>
+		$.ajax({
+			url: "http://127.0.0.1:3000/books",
+			success: function(data) {
+				// 2.将模板和数据结合一下，生成DOM节点
+				var html = template('tr', {data:data});
+				// 3.将DOM节点插入到相应DOM上
+				$('#table').append(html);
+			}
+		}) 
+	</script>
+</body>
+</html>
